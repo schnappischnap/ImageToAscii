@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using SchnappiSchnap.Imaging;
 
 class Program
@@ -6,7 +7,7 @@ class Program
     static void Main()
     {
         Bitmap greyscale = new Bitmap(@"greyscale_input.png");
-        Bitmap cat = new Bitmap(@"cat_input.jpg");
+        Bitmap cat = new Bitmap(@"cat_input.bmp");
         Font font = new Font("Lucida Console", 12, FontStyle.Regular);
 
         ImageToAscii greyAsciiImage = new ImageToAscii(greyscale);

@@ -31,6 +31,10 @@ namespace SchnappiSchnap.Imaging
             // Get the data from the bitmap.
             Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
             BitmapData bmd = bitmap.LockBits(rect, ImageLockMode.ReadOnly, bitmap.PixelFormat);
+            int depth = Image.GetPixelFormatSize(bitmap.PixelFormat);
+            if (depth != 8 && depth != 24 && depth != 32)
+                throw new ArgumentException("Only 8, 24 and 32 bpp images are supported.");
+            int colourComponentsCount = depth / 8;
 
             // Get the RGB data of each pixel.
             IntPtr ptr = bmd.Scan0;
@@ -41,10 +45,28 @@ namespace SchnappiSchnap.Imaging
             // Set the field values.
             this.imageSize = new Size(bmd.Width, bmd.Height);
             this.brightnesses = new float[imageSize.Width * imageSize.Height];
-            for (int i = 0; i < bytes; i += 4)
+            for(int i = 0; i < bytes; i += colourComponentsCount)
             {
-                float brightness = Color.FromArgb(rgb[i + 3], rgb[i], rgb[i + 1], rgb[i + 2]).GetBrightness();
-                this.brightnesses[i / 4] = brightness;
+                if (depth == 32)
+                {
+                    byte b = rgb[i];
+                    byte g = rgb[i + 1];
+                    byte r = rgb[i + 2];
+                    byte a = rgb[i + 3];
+                    this.brightnesses[i / 4] = Color.FromArgb(a, r, g, b).GetBrightness();
+                }
+                else if(depth == 24)
+                {
+                    byte b = rgb[i];
+                    byte g = rgb[i + 1];
+                    byte r = rgb[i + 2];
+                    this.brightnesses[i / 4] = Color.FromArgb(r, g, b).GetBrightness();
+                }
+                else if(depth == 8)
+                {
+                    byte c = rgb[i];
+                    this.brightnesses[i / 4] = Color.FromArgb(c, c, c).GetBrightness();
+                }
             }
         }
 

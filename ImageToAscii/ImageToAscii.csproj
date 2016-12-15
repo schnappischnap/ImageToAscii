@@ -52,9 +52,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="cat_input.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="cat_input.bmp" />
     <Content Include="greyscale_input.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
