@@ -4,6 +4,6 @@ A C# application to convert images into ASCII art.
 - The class can generate a string or an image.
 
 
-![Greyscale example](/ascii_cat.jpg?raw=true)
+![Greyscale example](/ascii_grey.jpg?raw=true)
 
-![Cat example](/ascii_grey.jpg?raw=true)
+![Cat example](/ascii_cat.jpg?raw=true)
